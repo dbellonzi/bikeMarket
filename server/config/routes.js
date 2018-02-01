@@ -57,10 +57,11 @@ module.exports = function(app){
     
     app.delete('/bike/delete/:userid/:bikeid', function(req, res) {
         bikes.deleteBike(req, res);
+    }),
+
+    app.get("*", (req, res) => { 
+        res.sendFile(path.resolve("././client/dist/index.html")) 
     })
-    // router.all("*", (req, res) => { 
-    //     res.sendFile(path.resolve("../client/dist/index.html")) 
-    // })
 
 };
 

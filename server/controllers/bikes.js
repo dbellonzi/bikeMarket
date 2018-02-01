@@ -53,6 +53,7 @@ module.exports = {
     })
   },
 
+
   updateBike: function(req, res) {
     console.log("@@@inside updateBike");
     console.log(req.body,"this is the body")
@@ -72,37 +73,36 @@ module.exports = {
         }
     })
     },
-  
-//   getBike: function(req,res) {
-//     console.log("@@@inside getBike");
-//     Bike.findById(req.params._id, function(err,data){
-//         if(err){
-//             console.log(err);
-//             throw err;
-//         } else {
-//             console.log("@@@success getBike: "+data);
-//             res.json(data);
-//         }
-//     })
-//   },
-  
-  deleteBike: function(req, res) {
-    var userid = req.params.userid
-    var bikeid = req.params.bikeid
-    console.log("@@inside delete bike")
-    console.log(userid);
-    console.log(bikeid);
 
-    User.findByIdAndUpdate(userid, { $pull: { _listings: { $elemMatch:  { _id: bikeid }}}}, { new: true }, function(err, updatedUser){
-        if(err){
-            console.log("Did not update correctly");
-            throw err;
-        }
-        else{
-            console.log("returning updated user");
-            res.json(updatedUser);
-        }
-    });
+    //fetches single listing
+    getBike: function(req, res) {
+        console.log("@@@inside getBike"+req.params.id);
+        User.findOne({'_listings.id': req.params.id}, function(err, singleBike){
+            if(err){
+                res.json({message: err.message});
+            } else {
+                res.json({data: singleBike})
+            }
+        });
+    },
+
+    deleteBike: function(req, res) {
+        var userid = req.params.userid
+        var bikeid = req.params.bikeid
+        console.log("@@inside delete bike")
+        console.log(userid);
+        console.log(bikeid);
+
+        User.findByIdAndUpdate(userid, { $pull: { _listings: { $elemMatch:  { _id: bikeid }}}}, { new: true }, function(err, updatedUser){
+            if(err){
+                console.log("Did not update correctly");
+                throw err;
+            }
+            else{
+                console.log("returning updated user");
+                res.json(updatedUser);
+            }
+        });
     }
     // User.findOne({_id: userid}, function(err, user){
     //     console.log (user)

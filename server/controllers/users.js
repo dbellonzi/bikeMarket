@@ -15,12 +15,15 @@ module.exports = {
 
   addUser: function(req, res) {
     console.log(req.body.f_name+" "+req.body.l_name)
-    var message = ""
-    if (req.body.password.length == 0 || req.body.conf_password.length ==0) {
-        message += "Missing password(s)"
+    if (!req.body.password || !req.body.conf_password) {
+        res.json(
+            {message: "Missing password(s)"}
+        )
     }
     if (req.body.password != req.body.conf_password) {
-        message += "Passwords don't match"
+        res.json(
+            {message: "Passwords don't match"}
+        )
     }
     res.json({message: message})
     var newUser = new User({
