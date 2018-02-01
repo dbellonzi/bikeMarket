@@ -8,7 +8,7 @@ module.exports = {
       if(err){
         console.log("@@@getBikes "+err);
       } else {
-        console.log("@@@found bike_list");
+        console.log("@@@found bike_list"+bike_list);
         res.json(bike_list);
       }
     })
