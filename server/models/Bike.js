@@ -13,12 +13,14 @@ var BikeSchema = new mongoose.Schema({
         type: String,
         required: [true, "missing description"],
         minlength: 10,
-        maxlength: 300,
+        maxlength: 200,
     },
     price: {
-        type: String,
+        type: Number,
         required: [true, "missing price"],
         trim: true,
+        min: 1,
+        max: 99999
     }, 
     location: {
         type: String,
@@ -29,8 +31,15 @@ var BikeSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        required: [true, "missing price"],
+        required: [true, "missing image"],
         trim: true,
+        maxlength: 200,
+        validate: {
+            validator: function(value) {
+              return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/.test(value);
+            },
+            message: "Invalid image URL"
+          }
     },
     _owner: {
         type: Schema.Types.ObjectId, 

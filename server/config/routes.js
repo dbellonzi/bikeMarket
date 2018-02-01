@@ -3,10 +3,6 @@ const bikes = require('../controllers/bikes.js');
 const path = require('path');
 
 module.exports = function(app){
-    app.get("/", function(req, res) {
-        res.render("index");
-    }),
-
     app.get("/users", function(req, res) {
         console.log("inside /users");
         users.getUsers(req, res);
