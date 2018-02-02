@@ -21,7 +21,7 @@ module.exports = {
     User.findOne({_id: req.params.id}, function(err, user){
         if(err){
             let message = "couldn't find user"
-            res.json({message:message})
+            res.json({ message: message })
             throw err;
         } else {
             var newBike = new Bike({
@@ -29,11 +29,14 @@ module.exports = {
                 description: req.body.description,
                 price: req.body.price,
                 location: req.body.location,
-                image: req.body.image
+                image: req.body.image,
+                _owner: req.body._owner
             });
             newBike.save(function(err, savedBike){
                 if(err) {
                     console.log("@@@could not add Bike: "+err);
+                    let message = "Couldn't save listing"
+                    res.json({ message: message })
                     throw err;
                 } else {
                     console.log("@@@Bike saved")
@@ -41,6 +44,8 @@ module.exports = {
                     user.save(function (err, updatedUser){
                         if (err) {
                             console.log('error updating user with bike')
+                            let message = "Couldn't update user with listing"
+                            res.json({ message: message })
                             throw err;
                         } else {
                             console.log('sending updated user')
